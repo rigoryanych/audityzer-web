@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/audityzer-web', '.']
+  
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/audityzer-web']
+  
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    args: ['run', '--filename=k8s/', '--image=gcr.io/$PROJECT_ID/audityzer-web', '--location=us-central1', '--cluster=audityzer-cluster']
+
+images:
+  - 'gcr.io/$PROJECT_ID/audityzer-web'

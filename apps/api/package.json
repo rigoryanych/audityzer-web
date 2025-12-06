@@ -1,0 +1,15 @@
+{
+  "name": "@audityzer/api",
+  "version": "1.0.0",
+  "description": "AUDITYZER API Server",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "firebase-admin": "^12.0.0",
+    "cors": "^2.8.5"
+  }
+}
