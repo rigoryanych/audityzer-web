@@ -1,0 +1,20 @@
+{
+  "name": "audityzer-web",
+  "version": "1.0.0",
+  "description": "AUDITYZER Web Ecosystem - Full-stack audit services platform",
+  "private": true,
+  "workspaces": [
+    "apps/frontend",
+    "apps/backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "start": "npm run start --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces"
+  },
+  "keywords": ["audit", "services", "platform", "nextjs", "express"],
+  "author": "AUDITYZER Team",
+  "license": "MIT"
+}
