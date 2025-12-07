@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: audityzer-frontend
+  namespace: audityzer
+  labels:
+    app: audityzer
+    component: frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: audityzer
+    component: frontend
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: audityzer-api
+  namespace: audityzer
+  labels:
+    app: audityzer
+    component: api
+spec:
+  type: ClusterIP
+  selector:
+    app: audityzer
+    component: api
+  ports:
+  - port: 3001
+    targetPort: http
+    protocol: TCP
+    name: http

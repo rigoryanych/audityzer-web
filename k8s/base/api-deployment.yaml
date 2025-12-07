@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audityzer-api
+  namespace: audityzer
+  labels:
+    app: audityzer
+    component: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: audityzer
+      component: api
+  template:
+    metadata:
+      labels:
+        app: audityzer
+        component: api
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3001"
+        audit.audityzer.io/enabled: "true"
+    spec:
+      serviceAccountName: audityzer-api
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: api
+        image: gcr.io/audityzer/audityzer-web-api:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 3001
+          protocol: TCP
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: audityzer-db
+              key: connection-string
+        - name: AUDIT_LOG_LEVEL
+          value: "INFO"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
